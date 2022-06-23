@@ -1,0 +1,12 @@
+.main-content {
+    height: calc(100vh - 80px);
+}
+.my-bg-gradiant {
+    background: linear-gradient(to right, #ee7724,#d8363a,#dd3675,#b44593) !important;
+}
+
+@media screen and (max-width: 640px) {
+    .xs-hide {
+        display: none;
+    }
+}
