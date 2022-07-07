@@ -42,9 +42,10 @@ export default {
                         this.todos = response.data;
                     }
 
-                    if (response.status && response.status == 'Token is Invalid') {
+                    if (!response.success && response.status.includes('Token')) {
                         this.$store.state.auth.status.loggedIn = false;
                         this.$router.push("/login");
+                        this.$emit('loginStatus');
                     }
                 })
                 .catch( error => {
