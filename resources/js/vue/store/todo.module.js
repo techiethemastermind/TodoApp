@@ -1,3 +1,4 @@
+import { defaultsDeep } from "lodash";
 import todoService from "../services/todo.service";
 const initialState = false;
 
@@ -11,9 +12,14 @@ export const todo = {
             return await Promise.resolve(todo);
         },
         async all({ commit }) {
-            const todos = await todoService.all();
-            commit('getSuccess', todos);
-            return await Promise.resolve(todos);
+            const response = await todoService.all();
+            if (response.status === 'success') {
+                commit('getSuccess', response.data);
+                return await Promise.resolve(response.data);
+            } else {
+                commit('getFailure', response.data);
+                return await Promise.resolve(response.data);
+            }
         },
         async update({ commit }, id) {
             const todo = await todoService.update(id);
@@ -36,6 +42,9 @@ export const todo = {
         },
         getSuccess(state, todos) {
             state.todos = todos;
+        },
+        getFailure(state, data) {
+            state.todos = null;
         },
         updateSuccess(state, todo) {
             state.todo = todo;

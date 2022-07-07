@@ -38,7 +38,14 @@ export default {
         getTodos() {
             this.$store.dispatch('todo/all')
                 .then( response => {
-                    this.todos = response.data;
+                    if (response.success) {
+                        this.todos = response.data;
+                    }
+
+                    if (response.status && response.status == 'Token is Invalid') {
+                        this.$store.state.auth.status.loggedIn = false;
+                        this.$router.push("/login");
+                    }
                 })
                 .catch( error => {
                     console.log(error);

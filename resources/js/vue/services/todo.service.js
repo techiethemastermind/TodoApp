@@ -8,7 +8,15 @@ class TodoService {
             .get(API_URL + 'all', { headers: authHeader() });
 
         if (response.status === 200 && response.data.success) {
-            return response.data;
+            return {
+                status: 'success',
+                data: response.data
+            }
+        }
+
+        return {
+            status: 'false',
+            data: response.data
         }
     }
     async store(name) {
